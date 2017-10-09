@@ -12,5 +12,5 @@ def chisquaretest(data, target, by):
     data1freq = data1counts / np.sum(data1counts)
     data2freq = data2counts / np.sum(data2counts)
     
-    return chisquare(data1freq, f_exp=data2freq)
+    return chisquare(data2freq, f_exp=data1freq)
     
