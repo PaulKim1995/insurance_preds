@@ -1,5 +1,6 @@
 from scipy.stats import chisquare
 import numpy as np
+from scipy.stats import norm
 
 
 def chisquaretest(data, target, by):
@@ -14,3 +15,21 @@ def chisquaretest(data, target, by):
     
     return chisquare(data2freq, f_exp=data1freq)
     
+    
+def zTest(X1, X2, mudiff, sd1, sd2, n1, n2):
+    pooledSE = np.sqrt(sd1**2/n1 + sd2**2/n2)
+    z = ((X1 - X2) - mudiff)/pooledSE
+    pval = 2*(1 - norm.cdf(np.abs(z)))
+    return np.round(z, 3), np.round(pval, 4)
+
+
+def twoSampleZ(d1, d2):
+    u1 = np.mean(d1)
+    u2 = np.mean(d2)
+    mudiff = u1-u2
+    sd1 = np.sqrt(np.var(d1))
+    sd2 = np.sqrt(np.var(d2))
+    n1 = len(d1)
+    n2 = len(d2)
+    print(u1, u2, mudiff, sd1, sd2, n1, n2)
+    return zTest(u1, u2, mudiff, sd1, sd2, n1, n2)
